@@ -1,7 +1,7 @@
 ---
 
 - name: Install vector from source
-  when: vector_install_from_repo | bool
+  when: not vector_install_from_repo | bool
   block:
     # Workaround for latest version being named against a version number
     - name: Get latest version
@@ -39,7 +39,7 @@
         arch: "{{ vector_arch[ansible_machine] }}"
 
 - name: Install vector from repository
-  when: not vector_install_from_repo | bool
+  when: vector_install_from_repo | bool
   block:
     - name: Install vector
       ansible.builtin.package:
