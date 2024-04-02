@@ -1,14 +1,18 @@
-vector_template: vector.toml.j2
-vector_config_file: /etc/vector/vector.toml
+---
 
-add_vector_docker_group: false
-add_vector_journal_group: false
+# vector configuration file
+vector_template: vector.yaml.j2
+vector_config_file: /etc/vector/vector.yaml
 
+# vector groups
+# vector_groups: []
+
+# install vector from source
 vector_nightly: false
-vector_version: "{{ vector_nightly | ternary('nightly','latest') }}"
+vector_version: "{{ vector_nightly | ternary('nightly', 'latest') }}"
+
+# install vector from repo
 vector_install_from_repo: false
+
+# vector package name
 vector_package: vector
-vector_repo_key: "https://repositories.timber.io/public/vector/gpg.3543DB2D0A2BC4B8.key"
-vector_repo:
-  Debian: "deb https://repositories.timber.io/public/vector/deb/{{ ansible_distribution | lower }} {{ ansible_lsb.codename | lower }} main"
-  RedHat: "https://repositories.timber.io/public/vector/rpm/el/$releasever/$basearch"

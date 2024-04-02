@@ -11,8 +11,8 @@ Currently only amd64, arch64, arch7 through deb and rpm packages are supported
 
 | Variable                                   | Required | Default                | Description
 |--------------------------------------------|----------|------------------------|------------
-| vector_template | yes | vector.toml.j2 | path of your vector.toml template
-| vector_config_file | yes | /etc/vector/vector.toml | system path of your vector.toml configuration
+| vector_template | yes | vector.yaml.j2 | path of your vector.yaml template
+| vector_config_file | yes | /etc/vector/vector.yaml | system path of your vector.yaml configuration
 | vector_nightly | no | false | use vector nightly build
 | add_vector_docker_group | no | false | add user vector to group docker
 | add_vector_journal_group | no | false | add user vector to group systemd-journal

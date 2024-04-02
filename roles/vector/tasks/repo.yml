@@ -1,25 +1,58 @@
 ---
 
-- block:
-    - name: Add vector gpg key to apt
-      become: true
-      apt_key:
-        url: "{{ vector_repo_key }}"
-        state: present
+- name: Fetch OS dependent variables
+  ansible.builtin.include_vars:
+    file: "{{ item }}"
+    name: os_vars
+  with_first_found:
+    - files:
+        - "{{ ansible_facts.distribution }}_{{ ansible_facts.distribution_major_version | default() }}.yml"
+        - "{{ ansible_facts.distribution }}.yml"
+        - "{{ ansible_facts.os_family }}_{{ ansible_facts.distribution_major_version | default() }}.yml"
+        - "{{ ansible_facts.os_family }}.yml"
+      skip: true
+  tags: always
 
-    - name: Add vector repository for Debian based distributions
-      become: true
-      apt_repository:
+- name: Configure repository and Repository key on Debian
+  when: ansible_os_family == "Debian"
+  block:
+    - name: Ensure apt-transport-https curl and gnupg are installed
+      ansible.builtin.apt:
+        name:
+          - apt-transport-https
+          - curl
+          - gnupg
+        state: present
+        update_cache: true
+
+    - name: Create key file /usr/share/keyrings/datadog-archive-keyring.gpg
+      ansible.builtin.file:
+        path: /usr/share/keyrings/datadog-archive-keyring.gpg
+        mode: "0644"
+        owner: root
+        group: root
+        state: touch
+
+    - name: Download key and put them into key file
+      ansible.builtin.shell: |
+        set -o pipefail
+        curl {{ item }} | gpg --no-default-keyring --keyring /usr/share/keyrings/datadog-archive-keyring.gpg --import --batch
+      register: download_repo_key
+      changed_when: true
+      failed_when: download_repo_key.rc != 0
+
+    - name: Add vector repository
+      ansible.builtin.apt_repository:
         repo: "{{ vector_repo }}"
         state: present
-        filename: timber-vector
-  when: ansible_os_family == "Debian"
+        filename: vector
+
 
 - name: Add vector repository for RedHat based distributions
-  yum_repository:
-    name: timber-vector
-    description: "Official repository for Timber / vector"
+  when: ansible_os_family == "RedHat"
+  ansible.builtin.yum_repository:
+    name: vector
     baseurl: "{{ vector_repo }}"
     gpgcheck: true
+    repo_gpgcheck: "{{ vector_repo_gpgcheck }}"
     gpgkey: "{{ vector_repo_key }}"
-  when: ansible_os_family == "RedHat"
