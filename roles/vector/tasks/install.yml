@@ -24,7 +24,7 @@
       notify: Restart vector
       vars:
         version: "{{ (vector_version == 'nightly') | bool | ternary('nightly/latest', vector_version) }}"
-        arch: "{{ vectort_arch[ansible_machine] }}"
+        arch: "{{ vector_arch[ansible_machine] }}"
 
     - name: Install Vector (RedHat)
       when: ansible_os_family == 'RedHat'
@@ -36,10 +36,10 @@
       vars:
         version: "{{ (vector_version == 'nightly') | bool | ternary('nightly/latest', vector_version) }}"
         package_version: "{{ vector_version is match('latest') | ternary(vector_version, vector_version ~ '-1') }}"
-        arch: "{{ vectort_arch[ansible_machine] }}"
+        arch: "{{ vector_arch[ansible_machine] }}"
 
 - name: Install vector from repository
-  when: vector_install_from_repo | bool
+  when: not vector_install_from_repo | bool
   block:
     - name: Install vector
       ansible.builtin.package:

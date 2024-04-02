@@ -3,7 +3,6 @@
 - name: Fetch OS dependent variables
   ansible.builtin.include_vars:
     file: "{{ item }}"
-    name: os_vars
   with_first_found:
     - files:
         - "{{ ansible_facts.distribution }}_{{ ansible_facts.distribution_major_version | default() }}.yml"
@@ -31,7 +30,7 @@
         mode: "0644"
         owner: root
         group: root
-        state: touch
+        state: file
 
     - name: Download key and put them into key file
       ansible.builtin.shell: |
@@ -40,13 +39,15 @@
       register: download_repo_key
       changed_when: true
       failed_when: download_repo_key.rc != 0
+      args:
+        executable: /bin/bash
+      loop: "{{ vector_repo_key }}"
 
     - name: Add vector repository
       ansible.builtin.apt_repository:
         repo: "{{ vector_repo }}"
         state: present
         filename: vector
-
 
 - name: Add vector repository for RedHat based distributions
   when: ansible_os_family == "RedHat"
