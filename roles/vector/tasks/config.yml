@@ -14,7 +14,7 @@
     name: vector
     groups: "{{ item }}"
     append: true
-  loop: vector_groups
+  loop: "{{ vector_groups }}"
   notify: Restart vector
 
 - name: Start vector
