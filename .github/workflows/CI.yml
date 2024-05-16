@@ -1,11 +1,12 @@
 ---
 name: Tests
 
-on: 
+on:
   push:
   pull_request:
   schedule:
     - cron: '20 10 * * tue'
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -29,5 +30,3 @@ jobs:
       - name: Test
         run: |
           cd roles/vector && molecule test --all
-
-

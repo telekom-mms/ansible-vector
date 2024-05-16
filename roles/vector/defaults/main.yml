@@ -7,10 +7,6 @@ vector_config_file: /etc/vector/vector.yaml
 # vector groups
 # vector_groups: []
 
-# install vector from source
-vector_nightly: false
-vector_version: "{{ vector_nightly | ternary('nightly', 'latest') }}"
-
 # install vector from repo
 vector_install_from_repo: false
 

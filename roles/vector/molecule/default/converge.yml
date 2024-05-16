@@ -18,6 +18,6 @@
         inputs: ["journald"]
         address: "vector.example.com:9000"
   tasks:
-    - name: "Include vector"
-      include_role:
-        name: "vector"
+    - name: Include role vector
+      ansible.builtin.include_role:
+        name: telekom_mms.vector.vector
