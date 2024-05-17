@@ -3,9 +3,3 @@ vector_arch:
   armv7l: armhf
   aarch64: arm64
   x86_64: amd64
-
-vector_repo: deb [signed-by=/usr/share/keyrings/datadog-archive-keyring.gpg] https://apt.vector.dev/ stable vector-0
-vector_repo_key:
-  - https://keys.datadoghq.com/DATADOG_APT_KEY_CURRENT.public
-  - https://keys.datadoghq.com/DATADOG_APT_KEY_F14F620E.public
-  - https://keys.datadoghq.com/DATADOG_APT_KEY_C0962C7D.public
