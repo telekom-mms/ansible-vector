@@ -3,7 +3,7 @@ name: CI - Linting & Testing
 
 on:
   push:
-    branches: [main]
+    branches: [master]
     paths:
       - 'playbooks/**'
       - 'roles/**'
@@ -11,7 +11,7 @@ on:
       - 'meta/**'
       - 'galaxy.yml'
   pull_request:
-    branches: [main]
+    branches: [master]
     paths:
       - 'playbooks/**'
       - 'roles/**'
