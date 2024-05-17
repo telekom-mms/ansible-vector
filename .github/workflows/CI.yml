@@ -1,32 +1,73 @@
 ---
-name: Tests
+name: CI - Linting & Testing
 
 on:
   push:
+    branches: [main]
+    paths:
+      - 'playbooks/**'
+      - 'roles/**'
+      - 'tests/**'
+      - 'meta/**'
+      - 'galaxy.yml'
   pull_request:
+    branches: [main]
+    paths:
+      - 'playbooks/**'
+      - 'roles/**'
+      - 'tests/**'
+      - 'meta/**'
+      - 'galaxy.yml'
+  # Run CI once per week (at 06:00 UTC)
+  # This ensures that even if there haven't been commits that we are still
+  # testing against latest version of ansible-test for each ansible-core
+  # version
   schedule:
-    - cron: '20 10 * * tue'
+    - cron: "0 6 * * 1"
+
+concurrency:
+  group: >-
+    ${{ github.workflow }}-${{
+      github.event.pull_request.number || github.sha
+    }}
+  cancel-in-progress: true
 
 jobs:
-  build:
+  linting:
+    name: Ansible Lint
     runs-on: ubuntu-latest
-    strategy:
-      max-parallel: 4
-      matrix:
-        python-version: [3.6, 3.7]
 
     steps:
-      - uses: actions/checkout@v1
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v1
+      - name: Check out code
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+
+      - name: Run Linting
+        uses: ansible/ansible-lint-action@cad5176ea6f24a38f909d688bd467ec8d942d7e1 # v6.17.0
+
+  molecule:
+    name: Molecule
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
         with:
-          python-version: ${{ matrix.python-version }}
+          path: ansible_collections/telekom_mms/vector
+
+      - name: Set up Python 3.8
+        uses: actions/setup-python@82c7e631bb3cdc910f68e0081d67478d79c6982d # v5
+        with:
+          python-version: 3.8
+
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
-          pip3 install -r requirements-tests.txt
-          ansible --version
-          ansible-lint --version
-      - name: Test
-        run: |
-          cd roles/vector && molecule test --all
+          python3 -m pip install --upgrade pip
+          python3 -m pip install -r requirements.txt
+        working-directory: ansible_collections/telekom_mms/vector
+
+      - name: Test role vector with molecule
+        run: molecule test
+        working-directory: ansible_collections/telekom_mms/vector/roles/vector
+        env:
+          PY_COLORS: "1"
+          ANSIBLE_FORCE_COLOR: "1"
