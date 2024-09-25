@@ -2,7 +2,7 @@
 
 # ansible-vector
 
-This is a ansible collection to set up [vector](https://vector.dev) on debian and redhat based systems.
+This is a ansible collection to set up [vector](https://vector.dev) on various systems.
 It translates the YAML configuration to TOML, so any configuration is possible.
 
 ## supported & tested OS
