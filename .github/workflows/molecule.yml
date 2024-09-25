@@ -26,6 +26,6 @@ jobs:
       - name: Molecule
         uses: gofrolist/molecule-action@v2
         with:
-          molecule_working_dir: "${{ github.repository }}"
+          molecule_working_dir: "${{ github.repository }}/roles/vector"
           molecule_options: --base-config molecule/default/base.yml
           molecule_args: --scenario-name ${{ matrix.scenario }}
