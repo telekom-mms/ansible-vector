@@ -1,23 +1,17 @@
 ---
-namespace: telekom_mms
-name: vector
-version: 1.0.0
-readme: README.md
-authors:
- - Dimitris Zervas <dzervas@dzervas.gr>
- - Gaëtan Duchaussois <gaetan.duchaussois@fretlink.com>
- - Dylan Humphreys <dylanjhumphreys@gmail.com>
- - Daniel Uhlmann <daniel.uhlmann@telekom.de>
- - Christopher Grau <c.grau@telekom.de>
-description: >-
- This is a ansible collection to set up [vector](https://vector.dev) on debian and redhat based systems.
- It translates the YAML configuration to TOML, so any configuration is possible.
-license_file: LICENSE
-tags:
- - vector
- - logging
- - monitoring
-repository: https://github.com/telekom-mms/ansible-vector
-documentation: https://github.com/telekom-mms/ansible-vector
-homepage: https://github.com/telekom-mms/ansible-vector
-issues: https://github.com/telekom-mms/ansible-vector/issues
+galaxy_info:
+  namespace: telekom_mms
+  role_name: vector
+  author: >-
+    Dimitris Zervas <dzervas@dzervas.gr>
+    Gaëtan Duchaussois <gaetan.duchaussois@fretlink.com>
+    Dylan Humphreys <dylanjhumphreys@gmail.com>
+    Daniel Uhlmann <daniel.uhlmann@telekom.de>
+    Christopher Grau <c.grau@telekom.de>
+  description: >-
+   This is an ansible collection to set up [vector](https://vector.dev) on various systems.
+  license: LICENSE
+  min_ansible_version: "2.14"
+dependencies:
+  - name: community.general
+    version: 8.6.0

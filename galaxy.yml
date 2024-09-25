@@ -10,13 +10,14 @@ authors:
   - Daniel Uhlmann <daniel.uhlmann@telekom.de>
   - Christopher Grau <c.grau@telekom.de>
 description: >-
-  This is a ansible collection to set up [vector](https://vector.dev) on debian and redhat based systems.
-  It translates the YAML configuration to TOML, so any configuration is possible.
+  This is an ansible collection to set up [vector](https://vector.dev) on various systems.
 license_file: LICENSE
 tags:
   - vector
   - logging
   - monitoring
+dependencies:
+  community.general: ">=8.6.0"
 repository: https://github.com/telekom-mms/ansible-vector
 documentation: https://github.com/telekom-mms/ansible-vector
 homepage: https://github.com/telekom-mms/ansible-vector
