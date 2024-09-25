@@ -11,7 +11,7 @@ galaxy_info:
   description: >-
    This is an ansible collection to set up [vector](https://vector.dev) on various systems.
   license: LICENSE
-  min_ansible_version: "2.9"
+  min_ansible_version: "2.16"
 dependencies:
   - name: community.general
     version: 8.6.0
