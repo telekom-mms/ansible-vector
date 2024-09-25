@@ -1,5 +1,0 @@
----
-vector_arch:
-  armv7l: armv7hl
-  aarch64: aarch64
-  x86_64: x86_64

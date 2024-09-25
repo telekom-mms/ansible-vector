@@ -3,18 +3,29 @@
   hosts: all
   gather_facts: false
   tasks:
-    - name: Execute vector
-      ansible.builtin.command: vector --version
-      changed_when: false
-      register: vector_version_rc
-    - name: Check grok pattern is not mangled
-      ansible.builtin.lineinfile:
-        path: /etc/vector/vector.toml
-        line: '    pattern = "(?<capture>\\d+)%{GREEDYDATA}"'
-      diff: true
-      register: grok_pattern_rc
-    - name: Assert vector is installed
+    - name: Verify existing configuration file /etc/vector/vector.yaml
+      ansible.builtin.file:
+        path: /etc/vector/vector.yaml
+        state: file
+      register: result_vector_config_file
+
+    - name: Validate existing configuration file /etc/vector/vector.yaml
       ansible.builtin.assert:
         that:
-          - vector_version_rc is success
-          - grok_pattern_rc is not changed
+          - result_vector_config_file.state == 'file'
+          - result_vector_config_file.owner == 'root'
+          - result_vector_config_file.group == 'root'
+          - result_vector_config_file.mode == '0644'
+
+    - name: Verify that serivce vector is running
+      ansible.builtin.service:
+        name: vector
+        state: started
+      register: result_vector_service
+
+    - name: Validate that serivce vector is running
+      ansible.builtin.assert:
+        that:
+          - result_vector_service.state == 'started'
+          - result_vector_service.changed == false
+          - result_vector_service.name == 'vector'

@@ -5,7 +5,15 @@
 This is a ansible collection to set up [vector](https://vector.dev) on debian and redhat based systems.
 It translates the YAML configuration to TOML, so any configuration is possible.
 
-Currently only amd64, arch64, arch7 through deb and rpm packages are supported.
+## supported & tested OS
+
+| OS           | Tested
+|--------------|--------------------
+| Debian 12    | :white_check_mark:
+| RL8          | :white_check_mark:
+| RL9          | :white_check_mark:
+| Ubuntu 22.04 | :white_check_mark:
+| Ubuntu 24.04 | :white_check_mark:
 
 ## Variables
 

@@ -1,0 +1,11 @@
+---
+platforms:
+  - name: ubuntu2404
+    image: geerlingguy/docker-ubuntu2404-ansible:latest
+    capabilities:
+      - SYS_ADMIN
+    cgroupns_mode: host
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    privileged: true
+    command: /bin/systemd
