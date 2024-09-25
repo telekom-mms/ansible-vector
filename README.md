@@ -1,9 +1,8 @@
-![publish](https://github.com/telekom-mms/ansible-vector/workflows/publish/badge.svg)
+[![molecule](https://github.com/telekom-mms/ansible-vector/actions/workflows/molecule.yml/badge.svg)](https://github.com/telekom-mms/ansible-vector/actions/workflows/molecule.yml) [![ansible-lint](https://github.com/telekom-mms/ansible-vector/actions/workflows/ansible-lint.yml/badge.svg)](https://github.com/telekom-mms/ansible-vector/actions/workflows/ansible-lint.yml)
 
 # ansible-vector
 
 This is a ansible collection to set up [vector](https://vector.dev) on various systems.
-It translates the YAML configuration to TOML, so any configuration is possible.
 
 ## supported & tested OS
 
