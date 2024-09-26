@@ -7,7 +7,7 @@ authors:
   - Dimitris Zervas <dzervas@dzervas.gr>
   - Gaëtan Duchaussois <gaetan.duchaussois@fretlink.com>
   - Dylan Humphreys <dylanjhumphreys@gmail.com>
-  - Daniel Uhlmann <daniel.uhlmann@telekom.de>
+  - Daniel Uhlmann <contact@xfuture-digital.de>
   - Christopher Grau <c.grau@telekom.de>
 description: >-
   This is an ansible collection to set up [vector](https://vector.dev) on various systems.
