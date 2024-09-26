@@ -1,6 +1,6 @@
 ---
 
-- name: Install vector from source
+- name: Install vector from downloaded package
   when: not vector_install_from_repo | bool
   block:
     - name: Install vector (Debian)
