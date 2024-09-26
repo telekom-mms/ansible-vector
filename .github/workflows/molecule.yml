@@ -3,6 +3,9 @@ name: molecule
 on:
   pull_request:
     branches: ["main", "master", "stable", "release/v*"]
+  push:
+  schedule:
+    - cron: '20 10 * * tue'
 
 jobs:
   build:
