@@ -1,33 +1,70 @@
 ---
 name: molecule
-on:
-  pull_request:
-    branches: ["main", "master", "stable", "release/v*"]
+on:  # yamllint disable-line rule:truthy
+  workflow_dispatch:
   push:
+    branches: [master]
+    paths:
+      - 'roles/vector/**'
+      - 'molecule/ssh_hardening/**'
+      - '.github/workflows/molecule.yml'
+      - 'requirements.txt'
+  pull_request:
+    branches: [master]
+    paths:
+      - 'roles/vector/**'
+      - 'molecule/default/**'
+      - '.github/workflows/molecule.yml'
+      - 'requirements.txt'
   schedule:
     - cron: '20 10 * * tue'
+
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      PY_COLORS: 1
+      ANSIBLE_FORCE_COLOR: 1
     strategy:
       fail-fast: false
-      max-parallel: 4
       matrix:
-        scenario:
+        include:
+          - molecule_distro:
+              - rockylinux8
+              - rockylinux9
+            molecule_docker_command: /usr/lib/systemd/systemd
+        molecule_distro:
           - debian12
-          - rockylinux8
-          - rockylinux9
           - ubuntu2204
           - ubuntu2404
-
+        molecule_docker_command:
+          - "/bin/systemd"
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout repo
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
-          path: "${{ github.repository }}"
+          path: ansible_collections/telekom_mms/vector
+          submodules: true
 
-      - name: Molecule
-        uses: gofrolist/molecule-action@v2
+      - name: Set up Python
+        uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b # v5
         with:
-          molecule_options: --base-config molecule/default/base.yml
-          molecule_args: --scenario-name ${{ matrix.scenario }}
+          python-version: 3.12
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+        working-directory: ansible_collections/telekom_mms/vector
+
+      - name: Downgrade Ansible for Rocky 8 tests
+        run: pip install "ansible-core<2.17"
+        working-directory: ansible_collections/telekom_mms/vector
+        if: matrix.molecule_distro == 'rockylinux8'
+
+      - name: Test with molecule
+        run: molecule test -s vector
+        env:
+          MOLECULE_DISTRO: ${{ matrix.molecule_distro }}
+          MOLECULE_DOCKER_COMMAND: ${{ matrix.molecule_docker_command }}
+        working-directory: ansible_collections/telekom_mms/vector
