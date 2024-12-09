@@ -1,0 +1,31 @@
+---
+- name: Verify
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Verify existing configuration file /etc/vector/vector.yaml
+      ansible.builtin.file:
+        path: /etc/vector/vector.yaml
+        state: file
+      register: result_vector_config_file
+
+    - name: Validate existing configuration file /etc/vector/vector.yaml
+      ansible.builtin.assert:
+        that:
+          - result_vector_config_file.state == 'file'
+          - result_vector_config_file.owner == 'root'
+          - result_vector_config_file.group == 'root'
+          - result_vector_config_file.mode == '0644'
+
+    - name: Verify that serivce vector is running
+      ansible.builtin.service:
+        name: vector
+        state: started
+      register: result_vector_service
+
+    - name: Validate that serivce vector is running
+      ansible.builtin.assert:
+        that:
+          - result_vector_service.state == 'started'
+          - result_vector_service.changed == false
+          - result_vector_service.name == 'vector'

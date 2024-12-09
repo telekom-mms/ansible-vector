@@ -6,18 +6,15 @@
       journald:
         type: journald
         current_boot_only: true
-    transforms:
-      grok:
-        type: grok_parser
-        inputs:
-          - journald
-        pattern: '(?<capture>\\d+)%{GREEDYDATA}'
     sinks:
       vector:
         type: vector
         inputs: ["journald"]
         address: "vector.example.com:9000"
+        healthcheck:
+          enabled: false
+    vector_install_from_repo: true
   tasks:
-    - name: "Include vector"
-      include_role:
-        name: "vector"
+    - name: Include role vector
+      ansible.builtin.include_role:
+        name: telekom_mms.vector.vector

@@ -1,14 +1,27 @@
-vector_template: vector.toml.j2
-vector_config_file: /etc/vector/vector.toml
+---
 
-add_vector_docker_group: false
-add_vector_journal_group: false
+# vector configuration file
+vector_template: vector.yaml.j2
+vector_config_file: /etc/vector/vector.yaml
 
-vector_nightly: false
-vector_version: "{{ vector_nightly | ternary('nightly','latest') }}"
+# vector groups
+# vector_groups: []
+
+# install vector from repo
 vector_install_from_repo: false
-vector_package: vector
-vector_repo_key: "https://repositories.timber.io/public/vector/gpg.3543DB2D0A2BC4B8.key"
 vector_repo:
-  Debian: "deb https://repositories.timber.io/public/vector/deb/{{ ansible_distribution | lower }} {{ ansible_lsb.codename | lower }} main"
-  RedHat: "https://repositories.timber.io/public/vector/rpm/el/$releasever/$basearch"
+  Debian: deb [signed-by=/usr/share/keyrings/datadog-archive-keyring.gpg] https://apt.vector.dev/ stable vector-0
+  RedHat: https://yum.vector.dev/stable/vector-0/$basearch/
+vector_repo_key:
+  Debian:
+    - https://keys.datadoghq.com/DATADOG_APT_KEY_CURRENT.public
+    - https://keys.datadoghq.com/DATADOG_APT_KEY_F14F620E.public
+    - https://keys.datadoghq.com/DATADOG_APT_KEY_C0962C7D.public
+  RedHat:
+    - https://keys.datadoghq.com/DATADOG_RPM_KEY_CURRENT.public
+    - https://keys.datadoghq.com/DATADOG_RPM_KEY_B01082D3.public
+    - https://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public
+vector_repo_gpgcheck: true
+
+# vector package name
+vector_package: vector

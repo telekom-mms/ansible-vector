@@ -1,21 +1,24 @@
 ---
-
-namespace: dzervas
+namespace: telekom_mms
 name: vector
+version: 1.0.0
 readme: README.md
 authors:
   - Dimitris Zervas <dzervas@dzervas.gr>
   - Gaëtan Duchaussois <gaetan.duchaussois@fretlink.com>
   - Dylan Humphreys <dylanjhumphreys@gmail.com>
-  - Daniel Uhlmann <Daniel.Uhlmann@t-systems.com>
-  - Christopher Grau <Christopher.Grau@t-systems.com>
-description: vector.dev ansible role
+  - Daniel Uhlmann <contact@xfuture-digital.de>
+  - Christopher Grau <c.grau@telekom.de>
+description: >-
+  This is an ansible collection to set up [vector](https://vector.dev) on various systems.
 license_file: LICENSE
 tags:
   - vector
   - logging
   - monitoring
-repository: https://github.com/dzervas/ansible-vector
-documentation: https://github.com/dzervas/ansible-vector
-issues: https://github.com/dzervas/ansible-vector/issues
-version: 0.1.6
+dependencies:
+  community.general: ">=8.6.0"
+repository: https://github.com/telekom-mms/ansible-vector
+documentation: https://github.com/telekom-mms/ansible-vector
+homepage: https://github.com/telekom-mms/ansible-vector
+issues: https://github.com/telekom-mms/ansible-vector/issues

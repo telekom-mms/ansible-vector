@@ -1,29 +1,24 @@
 ---
-- name: Copy config
-  template:
+- name: Create configuration
+  ansible.builtin.template:
     src: "{{ vector_template }}"
     dest: "{{ vector_config_file }}"
-    mode: 0644
-  notify: restart vector
+    mode: "0644"
+  notify: Restart vector
 
-- name: Add vector user to docker group
-  user:
+- name: Add vector to specified groups
+  when:
+    - vector_groups is defined
+    - vector_groups | length > 0
+  ansible.builtin.user:
     name: vector
-    groups: docker
+    groups: "{{ item }}"
     append: true
-  when: add_vector_docker_group | bool
-  notify: restart vector
-
-- name: Add vector user to systemd-journal group
-  user:
-    name: vector
-    groups: systemd-journal
-    append: true
-  when: add_vector_journal_group | bool
-  notify: restart vector
+  loop: "{{ vector_groups }}"
+  notify: Restart vector
 
 - name: Start vector
-  service:
+  ansible.builtin.service:
     state: started
     enabled: true
     name: vector

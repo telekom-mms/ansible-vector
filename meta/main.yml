@@ -1,0 +1,17 @@
+---
+galaxy_info:
+  namespace: telekom_mms
+  role_name: vector
+  author: >-
+    Dimitris Zervas <dzervas@dzervas.gr>
+    Gaëtan Duchaussois <gaetan.duchaussois@fretlink.com>
+    Dylan Humphreys <dylanjhumphreys@gmail.com>
+    Daniel Uhlmann <contact@xfuture-digital.de>
+    Christopher Grau <c.grau@telekom.de>
+  description: >-
+   This is an ansible collection to set up [vector](https://vector.dev) on various systems.
+  license: LICENSE
+  min_ansible_version: "2.17"
+dependencies:
+  - name: community.general
+    version: 8.6.0

@@ -1,28 +1,34 @@
-![publish](https://github.com/dzervas/ansible-vector/workflows/publish/badge.svg)
+[![molecule](https://github.com/telekom-mms/ansible-vector/actions/workflows/molecule.yml/badge.svg)](https://github.com/telekom-mms/ansible-vector/actions/workflows/molecule.yml) [![ansible-lint](https://github.com/telekom-mms/ansible-vector/actions/workflows/ansible-lint.yml/badge.svg)](https://github.com/telekom-mms/ansible-vector/actions/workflows/ansible-lint.yml)
 
-# Vector ansible role
+# ansible-vector
 
-This is an ansible role to set up [vector](https://vector.dev).
-It translates the YAML configuration to TOML, so any configuration is possible.
+This is a ansible collection to set up [vector](https://vector.dev) on various systems.
 
-Currently only amd64, arch64, arch7 through deb and rpm packages are supported
+## supported & tested OS
+
+| OS           | Tested
+|--------------|--------------------
+| Debian 12    | :white_check_mark:
+| RL8          | :white_check_mark:
+| RL9          | :white_check_mark:
+| Ubuntu 22.04 | :white_check_mark:
+| Ubuntu 24.04 | :white_check_mark:
 
 ## Variables
 
-| Variable                                   | Required | Default                | Description
-|--------------------------------------------|----------|------------------------|------------
-| vector_template | yes | vector.toml.j2 | path of your vector.toml template
-| vector_config_file | yes | /etc/vector/vector.toml | system path of your vector.toml configuration
-| vector_nightly | no | false | use vector nightly build
-| add_vector_docker_group | no | false | add user vector to group docker
-| add_vector_journal_group | no | false | add user vector to group systemd-journal
-| vector_install_from_repo | no | false | whether to install vector from packages or install from deb or redhat based repositories
-| vector_repo_key | no | `https://repositories.timber.io/public/vector/gpg.3543DB2D0A2BC4B8.key` | configurable repo key, in case repo proxy is used
-| vector_repo | no | Debian: `deb https://repositories.timber.io/public/vector/deb/{{ ansible_distribution | lower }} {{ ansible_lsb.codename | lower }} main`<br>Redhat: `https://repositories.timber.io/public/vector/rpm/el/$releasever/$basearch` | configurable repo, in case repo proxy is used
-| vector_package | no | vector | option to define vector version with package name
-| sources | yes | false | ingest observability data from a wide variety of targets [link](https://vector.dev/docs/reference/configuration/sources/)
-| transforms | no | false | shape your data as it moves through your Vector topology [link](https://vector.dev/docs/reference/configuration/transforms/)
-| sinks | yes | false | deliver your observability data to a variety of destinations [link](https://vector.dev/docs/reference/configuration/sinks/)
+| Variable                 | Required | Default                 | Description
+|--------------------------|----------|-------------------------|------------
+| vector_template          | yes      | vector.yaml.j2          | path of your vector.yaml template
+| vector_config_file       | yes      | /etc/vector/vector.yaml | system path of your vector.yaml configuration
+| vector_groups            | no       |                         | add user vector to specified groups
+| vector_install_from_repo | no       | false                   | whether to install vector from packages or install from deb or redhat based repositories
+| vector_repo_key          | no       | see `defaults/main.yml` | configurable repo key, in case repo proxy is used
+| vector_repo              | no       | see `defaults/main.yml` | configurable repo, in case repo proxy is used
+| vector_package           | no       | vector                  | option to define vector version with package name
+| vector_version           | no       |                         | define vector version while vector is installed by source
+| sources                  | yes      | false                   | ingest observability data from a wide variety of targets [link](https://vector.dev/docs/reference/configuration/sources/)
+| transforms               | no       | false                   | shape your data as it moves through your Vector topology [link](https://vector.dev/docs/reference/configuration/transforms/)
+| sinks                    | yes      | false                   | deliver your observability data to a variety of destinations [link](https://vector.dev/docs/reference/configuration/sinks/)
 
 ## Example for configuration with ansible
 ```yaml
@@ -47,7 +53,7 @@ sinks:
 
 ## Example playbook
 ```yaml
-- name: install and configure vector
+- name: Install and configure vector
   hosts: all
   vars:
     sources:
@@ -66,5 +72,5 @@ sinks:
         inputs: ["journald"]
         address: "vector.example.com:9000"
   roles:
-    - vector
+    - telekom_mms.vector.vector
 ```

@@ -1,11 +1,11 @@
 ---
 
-- name: Create repos for debian or redhat based systems
-  include_tasks: repo.yml
+- name: Create repository for debian or redhat based systems
   when: vector_install_from_repo | bool
+  ansible.builtin.include_tasks: repo.yml
 
 - name: Install vector
-  include_tasks: install.yml
+  ansible.builtin.include_tasks: install.yml
 
 - name: Create configuration for vector
-  include_tasks: config.yml
+  ansible.builtin.include_tasks: config.yml
