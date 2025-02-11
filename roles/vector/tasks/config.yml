@@ -17,6 +17,16 @@
   loop: "{{ vector_groups }}"
   notify: Restart vector
 
+- name: Add RestartSec to systemd config
+  when:
+    - vector_restartsec is defined
+  ansible.builtin.lineinfile:
+        path: "{{ vector_systemd_config }}"
+        regexp: '^RestartSec='
+        line: 'RestartSec={{ vector_restartsec }}'
+        insertafter: '^\[Service\]'
+  notify: Restart vector
+
 - name: Start vector
   ansible.builtin.service:
     state: started
