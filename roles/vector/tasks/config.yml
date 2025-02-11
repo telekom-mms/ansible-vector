@@ -21,10 +21,10 @@
   when:
     - vector_restartsec is defined
   ansible.builtin.lineinfile:
-        path: "{{ vector_systemd_config }}"
-        regexp: '^RestartSec='
-        line: 'RestartSec={{ vector_restartsec }}'
-        insertafter: '^\[Service\]'
+    path: "{{ vector_systemd_config }}"
+    regexp: '^RestartSec='
+    line: 'RestartSec={{ vector_restartsec }}'
+    insertafter: '^\[Service\]'
   notify: Restart vector
 
 - name: Start vector
