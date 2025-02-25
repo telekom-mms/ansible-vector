@@ -17,12 +17,21 @@
   loop: "{{ vector_groups }}"
   notify: Restart vector
 
+- name: Create a directory for drop-inm configuration if it does not exist
+  when:
+    - vector_restartsec is defined
+  ansible.builtin.file:
+    path: "{{ vector_restartsec_config_dir }}"
+    state: directory
+    owner: root
+    mode: '0755'
+
 - name: Add RestartSec to systemd config
   when:
     - vector_restartsec is defined
   ansible.builtin.template:
     src: "{{ vector_restartsec_template }}"
-    dest: "{{ vector_restartsec_config_file }}"
+    dest: "{{ vector_restartsec_config_dir }}/{{ vector_restartsec_config_file }}"
     owner: root
     group: root
     mode: '0644'
