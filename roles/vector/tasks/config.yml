@@ -20,12 +20,13 @@
 - name: Add RestartSec to systemd config
   when:
     - vector_restartsec is defined
-  ansible.builtin.lineinfile:
-    path: "{{ vector_systemd_config }}"
-    regexp: '^RestartSec='
-    line: 'RestartSec={{ vector_restartsec }}'
-    insertafter: '^\[Service\]'
-  notify: Restart vector
+  ansible.builtin.template:
+    src: "{{ vector_restartsec_template }}"
+    dest: "{{ vector_restartsec_config_file }}"
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Reload systemd
 
 - name: Start vector
   ansible.builtin.service:
