@@ -21,7 +21,7 @@
   when:
     - vector_restartsec is defined
   ansible.builtin.file:
-    path: "{{ vector_restartsec_config_dir }}"
+    path: /etc/systemd/system/vector.service.d
     state: directory
     owner: root
     mode: '0755'
@@ -30,8 +30,8 @@
   when:
     - vector_restartsec is defined
   ansible.builtin.template:
-    src: "{{ vector_restartsec_template }}"
-    dest: "{{ vector_restartsec_config_dir }}/{{ vector_restartsec_config_file }}"
+    src: vector_restartsec.j2
+    dest: /etc/systemd/system/vector.service.d/vector.conf
     owner: root
     group: root
     mode: '0644'

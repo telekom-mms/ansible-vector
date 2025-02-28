@@ -4,11 +4,6 @@
 vector_template: vector.yaml.j2
 vector_config_file: /etc/vector/vector.yaml
 
-# vector restartsec vector_template
-vector_restartsec_template: vector_restartsec.j2
-vector_restartsec_config_dir: /etc/systemd/system/vector.service.d
-vector_restartsec_config_file: vector.conf
-
 # vector groups
 # vector_groups: []
 
