@@ -17,7 +17,7 @@
   loop: "{{ vector_groups }}"
   notify: Restart vector
 
-- name: Create a directory for drop-inm configuration if it does not exist
+- name: Create a directory for drop-in configuration if it does not exist
   when:
     - vector_restartsec is defined
   ansible.builtin.file:
