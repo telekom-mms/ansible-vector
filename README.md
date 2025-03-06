@@ -25,9 +25,6 @@ This is a ansible collection to set up [vector](https://vector.dev) on various s
 | vector_repo_key               | no       | see `defaults/main.yml`                          | configurable repo key, in case repo proxy is used
 | vector_repo                   | no       | see `defaults/main.yml`                          | configurable repo, in case repo proxy is used
 | vector_restartsec             | no       |                                                  | add RestartSec to systemd config
-| vector_restartsec_template    | no       | vector_restartsec.j2                             | path of your vector_restartsec template
-| vector_restartsec_config_dir  | no       | /etc/systemd/system/vector.service.d             | path of your drop-in vector systemd configuration
-| vector_restartsec_config_file | no       | vector.conf                                      | file name of your drop-in vector systemd configuration
 | vector_package                | no       | vector                                           | option to define vector version with package name
 | vector_version                | no       |                                                  | define vector version while vector is installed by source
 | sources                       | yes      | false                                            | ingest observability data from a wide variety of targets [link](https://vector.dev/docs/reference/configuration/sources/)
