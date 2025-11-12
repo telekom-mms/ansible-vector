@@ -21,6 +21,7 @@ This is a ansible collection to set up [vector](https://vector.dev) on various s
 | vector_template               | yes      | vector.yaml.j2                                   | path of your vector.yaml template
 | vector_config_file            | yes      | /etc/vector/vector.yaml                          | system path of your vector.yaml configuration
 | vector_groups                 | no       |                                                  | add user vector to specified groups
+| vector_manage_repo            | no       | false                                            | configure deb or redhat based repositories
 | vector_install_from_repo      | no       | false                                            | whether to install vector from packages or install from deb or redhat based repositories
 | vector_repo_key               | no       | see `defaults/main.yml`                          | configurable repo key, in case repo proxy is used
 | vector_repo                   | no       | see `defaults/main.yml`                          | configurable repo, in case repo proxy is used
