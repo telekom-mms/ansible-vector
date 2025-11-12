@@ -24,9 +24,9 @@
       ansible.builtin.shell: |
         set -o pipefail
         curl {{ item }} | gpg --no-default-keyring --keyring /usr/share/keyrings/datadog-archive-keyring.gpg --import --batch
-      register: download_repo_key
+      register: vector_download_repo_key
       changed_when: true
-      failed_when: download_repo_key.rc != 0
+      failed_when: vector_download_repo_key.rc != 0
       args:
         executable: /bin/bash
       loop: "{{ vector_repo_key[ansible_os_family] }}"
