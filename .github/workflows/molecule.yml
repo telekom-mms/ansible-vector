@@ -36,6 +36,7 @@ jobs:
             molecule_docker_command: /usr/lib/systemd/systemd
         molecule_distro:
           - debian12
+          - debian13
           - ubuntu2204
           - ubuntu2404
         molecule_docker_command:

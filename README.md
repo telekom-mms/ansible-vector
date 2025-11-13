@@ -9,6 +9,7 @@ This is a ansible collection to set up [vector](https://vector.dev) on various s
 | OS           | Tested
 |--------------|--------------------
 | Debian 12    | :white_check_mark:
+| Debian 13    | :white_check_mark:
 | RL8          | :white_check_mark:
 | RL9          | :white_check_mark:
 | Ubuntu 22.04 | :white_check_mark:
