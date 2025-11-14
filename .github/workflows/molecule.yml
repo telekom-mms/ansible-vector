@@ -34,6 +34,8 @@ jobs:
             molecule_docker_command: /usr/lib/systemd/systemd
           - molecule_distro: rockylinux9
             molecule_docker_command: /usr/lib/systemd/systemd
+          - molecule_distro: debian13
+            molecule_docker_command: /usr/lib/systemd/systemd
         molecule_distro:
           - debian12
           - ubuntu2204
