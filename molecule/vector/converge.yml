@@ -14,6 +14,7 @@
         healthcheck:
           enabled: false
     vector_install_from_repo: true
+    vector_manage_repo: true
   tasks:
     - name: Include role vector
       ansible.builtin.include_role:

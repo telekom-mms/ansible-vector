@@ -1,7 +1,7 @@
 ---
 
 - name: Create repository for debian or redhat based systems
-  when: vector_install_from_repo | bool
+  when: vector_manage_repo | bool
   ansible.builtin.include_tasks: repo.yml
 
 - name: Install vector

@@ -9,6 +9,7 @@ vector_config_file: /etc/vector/vector.yaml
 
 # install vector from repo
 vector_install_from_repo: false
+vector_manage_repo: false
 vector_repo:
   Debian: deb [signed-by=/usr/share/keyrings/datadog-archive-keyring.gpg] https://apt.vector.dev/ stable vector-0
   RedHat: https://yum.vector.dev/stable/vector-0/$basearch/
